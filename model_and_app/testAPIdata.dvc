@@ -1,7 +1,0 @@
-md5: 77201ca93390b0ce7bc099c1d3630f85
-outs:
-- md5: afd578019fbba0e5cf934f2201c62d1e.dir
-  path: testAPIdata
-  cache: true
-  metric: false
-  persist: false

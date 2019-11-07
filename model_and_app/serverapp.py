@@ -11,11 +11,18 @@
 
 # from tensorflow.keras.applications import ResNet50
 import tensorflow
-from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.preprocessing.image import img_to_array, load_img
 from PIL import Image
 import numpy as np
-import flask
 import io
+import os
+import flask
+
+
+# Flask utils
+from flask import Flask, redirect, url_for, request, render_template
+from werkzeug.utils import secure_filename
+
 
 # initialize our Flask application and the Keras model
 app = flask.Flask(__name__)
@@ -34,7 +41,8 @@ def load_model():
 	# model.load_weights(top_model_weights_path, by_name=False)
 	model._make_predict_function() 
 
-def prepare_image(image, target):
+def prepare_image(file_path, target):
+	image = load_img(file_path, target)
 	# if the image mode is not RGB, convert it
 	if image.mode != "RGB":
 		image = image.convert("RGB")
@@ -60,28 +68,44 @@ def model_predict(image):
     return describe
 
 
-@app.route("/predict", methods=["POST"])
+@app.route('/', methods=['GET'])
+def index():
+    # Main page
+    return render_template('index.html')
+
+@app.route('/predict', methods=['GET', 'POST'])
 def predict():
 	# initialize the data dictionary that will be returned from the
 	# view
-	data = {"success": False}
+	# data = {"success": False}
 
 	# ensure an image was properly uploaded to our endpoint
 	if flask.request.method == "POST":
-		if flask.request.files.get("image"):
-			# read the image in PIL format
-			image = flask.request.files["image"].read()
-			image = Image.open(io.BytesIO(image))
+		print("get image")
+		# # read the image in PIL format
+		# image = flask.request.files["image"].read()
+		# image = Image.open(io.BytesIO(image))
+		# Get the file from post request
+		f = request.files['file']
+		print("get image")
+		# Save the file to ./uploads
+		basepath = os.path.dirname(__file__)
+		file_path = os.path.join(
+			basepath, 'uploads', secure_filename(f.filename))
+		f.save(file_path)
 
-			# preprocess the image and prepare it for classification
-			image = prepare_image(image, target=(150, 150))
-
-			# classify the input image and then initialize the list
-			# of predictions to return to the client
-			preds = model_predict(image)
-			result = str(preds[0])
+		# preprocess the image and prepare it for classification
+		image = prepare_image(file_path, target=(150, 150))
+		print("prepare image")
+		# classify the input image and then initialize the list
+		# of predictions to return to the client
+		preds = model_predict(image)
+		result = str(preds[0])
+		print(result)
+		return result
 	# return the data dictionary as a JSON response
-	return flask.jsonify(result)
+	# return flask.jsonify(result)
+	return None
 
 # if this is the main thread of execution first load the model and
 # then start the server
@@ -89,4 +113,4 @@ if __name__ == "__main__":
 	print(("* Loading Keras model and Flask starting server..."
 		"please wait until server has fully started"))
 	load_model()
-	app.run(port=5000, debug=False, host='0.0.0.0')
+	app.run(port=5000, debug=True, host='0.0.0.0')
