@@ -41,8 +41,8 @@ def load_model():
 	# model.load_weights(top_model_weights_path, by_name=False)
 	model._make_predict_function() 
 
-def prepare_image(file_path, target):
-	image = load_img(file_path, target)
+def prepare_image(image, target):
+	# image = load_img(file_path, target)
 	# if the image mode is not RGB, convert it
 	if image.mode != "RGB":
 		image = image.convert("RGB")
@@ -83,19 +83,19 @@ def predict():
 	if flask.request.method == "POST":
 		print("get image")
 		# # read the image in PIL format
-		# image = flask.request.files["image"].read()
+		# image = flak.request.files["image"].read()
 		# image = Image.open(io.BytesIO(image))
 		# Get the file from post request
-		f = request.files['file']
+		image = Image.open(request.files['file'].stream)
 		print("get image")
 		# Save the file to ./uploads
-		basepath = os.path.dirname(__file__)
-		file_path = os.path.join(
-			basepath, 'uploads', secure_filename(f.filename))
-		f.save(file_path)
+		# basepath = os.path.dirname(__file__)
+		# file_path = os.path.join(
+		# 	basepath, 'uploads', secure_filename(f.filename))
+		# f.save(file_path)
 
 		# preprocess the image and prepare it for classification
-		image = prepare_image(file_path, target=(150, 150))
+		image = prepare_image(image, target=(150, 150))
 		print("prepare image")
 		# classify the input image and then initialize the list
 		# of predictions to return to the client
