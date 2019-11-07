@@ -43,7 +43,7 @@ def prepare_image(image, target):
 	image = img_to_array(image)
 	image = np.expand_dims(image, axis=0)
 	image /= 255 
-
+	app.logger.info("test for CI/CD")
 	# return the processed image
 	return image
 
