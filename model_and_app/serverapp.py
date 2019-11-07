@@ -103,3 +103,6 @@ if __name__ == "__main__":
 		"please wait until server has fully started"))
 	load_model()
 	app.run(port=5000, debug=True, host='0.0.0.0')
+
+
+	#testCI/CD
