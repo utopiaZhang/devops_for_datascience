@@ -75,24 +75,13 @@ def index():
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
-	# initialize the data dictionary that will be returned from the
-	# view
-	# data = {"success": False}
 
-	# ensure an image was properly uploaded to our endpoint
 	if flask.request.method == "POST":
 		print("get image")
-		# # read the image in PIL format
-		# image = flak.request.files["image"].read()
-		# image = Image.open(io.BytesIO(image))
 		# Get the file from post request
 		image = Image.open(request.files['file'].stream)
 		print("get image")
-		# Save the file to ./uploads
-		# basepath = os.path.dirname(__file__)
-		# file_path = os.path.join(
-		# 	basepath, 'uploads', secure_filename(f.filename))
-		# f.save(file_path)
+
 
 		# preprocess the image and prepare it for classification
 		image = prepare_image(image, target=(150, 150))
