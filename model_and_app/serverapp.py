@@ -50,7 +50,7 @@ def prepare_image(image, target):
 def model_predict(image):
     describe = []
     prediction = model.predict(image)
-    app.logger.info("prediction np array: {}".format(prediction))
+    # app.logger.info("prediction np array: {}".format(prediction))
     if prediction < 0.5:
         describe.append('cat %.2f%%' % (100 -prediction*100))
     else:
