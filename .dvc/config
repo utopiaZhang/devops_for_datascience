@@ -1,0 +1,6 @@
+['remote "s3remote"']
+url = s3://kth.mt.vc.test/devops
+region = eu-north-1
+
+[core]
+remote = s3remote
