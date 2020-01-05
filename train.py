@@ -108,82 +108,59 @@ model = Sequential([
     Dropout(0.5),
     Dense(1, activation='sigmoid')
 ])
-# model = Sequential([
-#     Conv2D(32, 3, padding='same', activation='relu', 
-#            input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
-#     Conv2D(32, 3, padding='same', activation='relu'),
-#     MaxPooling2D(),
-
-#     Conv2D(64, 3, padding='same', activation='relu'),
-#     Conv2D(64, 3, padding='same', activation='relu'),
-#     MaxPooling2D(),
-
-#     Conv2D(128, 3, padding='same', activation='relu'),
-#     Conv2D(128, 3, padding='same', activation='relu'),
-#     MaxPooling2D(),
-
-#     Conv2D(256, 3, padding='same', activation='relu'),
-#     Conv2D(256, 3, padding='same', activation='relu'),
-#     MaxPooling2D(),
-
-
-#     Flatten(),
-#     Dense(256, activation='relu'),
-#     Dropout(0.5),
-#     Dense(256, activation='relu'),
-#     Dropout(0.5),
-#     Dense(1, activation='sigmoid')
-# ])
-# op = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-op = Adam(lr=0.0003)
-# op = RMSprop(lr=0.0001)
-model.compile(
-    # optimizer='adam',
-  # optimizer='rmsprop',
-  optimizer = op,
-              loss='binary_crossentropy',
-              metrics=['accuracy'])
-
-history = model.fit_generator(
-    train_data_gen,
-    steps_per_epoch=total_train // batch_size,
-    epochs=epochs,
-    validation_data=val_data_gen,
-    validation_steps=total_val // batch_size
-)
 
 model.summary()
-model.save(top_model_path)
-model.save_weights(top_model_weights_path)
+
+# # op = optimizers.SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
+# op = Adam(lr=0.0003)
+# # op = RMSprop(lr=0.0001)
+# model.compile(
+#     # optimizer='adam',
+#   # optimizer='rmsprop',
+#   optimizer = op,
+#               loss='binary_crossentropy',
+#               metrics=['accuracy'])
+
+# history = model.fit_generator(
+#     train_data_gen,
+#     steps_per_epoch=total_train // batch_size,
+#     epochs=epochs,
+#     validation_data=val_data_gen,
+#     validation_steps=total_val // batch_size
+# )
+
+
+# model.save(top_model_path)
+# model.save_weights(top_model_weights_path)
 
 
 
-acc = history.history['acc']
-val_acc = history.history['val_acc']
+# acc = history.history['acc']
+# val_acc = history.history['val_acc']
 
-loss = history.history['loss']
-val_loss = history.history['val_loss']
+# loss = history.history['loss']
+# val_loss = history.history['val_loss']
 
-epochs_range = range(epochs)
+# epochs_range = range(epochs)
 
-fig = plt.figure(figsize=(8, 8))
-plt.subplot(1, 2, 1)
-plt.plot(epochs_range, acc, label='Training Accuracy')
-plt.plot(epochs_range, val_acc, label='Validation Accuracy')
-plt.legend(loc='lower right')
-plt.title('Training and Validation Accuracy')
+# fig = plt.figure(figsize=(8, 8))
+# plt.subplot(1, 2, 1)
+# plt.plot(epochs_range, acc, label='Training Accuracy')
+# plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+# plt.legend(loc='lower right')
+# plt.title('Training and Validation Accuracy')
 
-plt.subplot(1, 2, 2)
-plt.plot(epochs_range, loss, label='Training Loss')
-plt.plot(epochs_range, val_loss, label='Validation Loss')
-plt.legend(loc='upper right')
-plt.title('Training and Validation Loss')
-plt.show()
-fig.savefig('result_50/acc_loss_basic.png')
+# plt.subplot(1, 2, 2)
+# plt.plot(epochs_range, loss, label='Training Loss')
+# plt.plot(epochs_range, val_loss, label='Validation Loss')
+# plt.legend(loc='upper right')
+# plt.title('Training and Validation Loss')
+# plt.show()
+# fig.savefig('result_50/acc_loss_basic.png')
 
 
 
-np.savetxt("result_50/acc_history.txt", np.array(acc), delimiter=",")
-np.savetxt("result_50/val_acc_history.txt", np.array(val_acc), delimiter=",")
-np.savetxt("result_50/loss_history.txt", np.array(loss), delimiter=",")
-np.savetxt("result_50/val_loss_history.txt", np.array(val_loss), delimiter=",")
+# np.savetxt("result_50/acc_history.txt", np.array(acc), delimiter=",")
+# np.savetxt("result_50/val_acc_history.txt", np.array(val_acc), delimiter=",")
+# np.savetxt("result_50/loss_history.txt", np.array(loss), delimiter=",")
+# np.savetxt("result_50/val_loss_history.txt", np.array(val_loss), delimiter=",")
