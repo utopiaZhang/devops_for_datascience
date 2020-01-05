@@ -13,8 +13,8 @@ import numpy as np
 
 # import matplotlib.pyplot as plt
 
-top_model_path = 'scratch_model.h5'
-top_model_weights_path = 'scratch_model.weights.h5'
+top_model_path = 'models_retrain/scratch_model.h5'
+top_model_weights_path = 'models_retrain/scratch_model.weights.h5'
 train_dir = 'data/train'
 validation_dir = 'data/validation'
 

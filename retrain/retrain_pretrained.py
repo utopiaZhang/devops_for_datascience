@@ -15,8 +15,8 @@ from tensorflow.keras.optimizers import Adam, SGD, RMSprop
 top_model_path = '../model_and_app/model.h5'
 top_model_weights_path = '../model_and_app/weights.h5'
 
-new_model_path = 'pretrained_model.h5'
-new_model_weights_path = 'pretrained_weights.h5'
+new_model_path = 'models_retrain/pretrained_model.h5'
+new_model_weights_path = 'models_retrain/pretrained_weights.h5'
 
 
 train_dir = 'data/train'
@@ -82,7 +82,7 @@ val_data_gen = image_gen_val.flow_from_directory(batch_size=batch_size,
 
 model = tensorflow.keras.models.load_model(top_model_path)
 
-
+model.summary()
 # for i,layer in enumerate(model.layers):
 #   print(i,layer.name)
 # for i,layer in enumerate(model.layers):
@@ -104,7 +104,7 @@ history = model.fit_generator(
     validation_steps=total_val // batch_size
 )
 
-model.summary()
+
 # model.save(new_model_path)
 
 

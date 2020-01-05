@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 top_model_path = '../model_and_app/model.h5'
 top_model_weights_path = '../model_and_app/weights.h5'
 
-new_model_path = 'transfer_learning_model.h5'
-new_model_weights_path = 'transfer_learning_new_weights.h5'
+new_model_path = 'models_retrain/transfer_learning_model.h5'
+new_model_weights_path = 'models_retrain/transfer_learning_new_weights.h5'
 
 
 train_dir = 'data/train'
@@ -90,7 +90,7 @@ for layer in model.layers[7:]:
     layer.trainable=True
 
 
-
+model.summary()
 
 op = Adam(lr=0.0003)
 model.compile(optimizer=op,
@@ -106,37 +106,37 @@ history = model.fit_generator(
 )
 
 model.summary()
-# model.save(new_model_path)
-# print(history.history.keys())
-# 'acc', 'loss', 'val_acc', 'val_loss'
-acc = history.history['acc']
-val_acc = history.history['val_acc']
+# # model.save(new_model_path)
+# # print(history.history.keys())
+# # 'acc', 'loss', 'val_acc', 'val_loss'
+# acc = history.history['acc']
+# val_acc = history.history['val_acc']
 
-loss = history.history['loss']
-val_loss = history.history['val_loss']
+# loss = history.history['loss']
+# val_loss = history.history['val_loss']
 
-epochs_range = range(epochs)
+# epochs_range = range(epochs)
 
-fig = plt.figure(figsize=(8, 8))
-plt.subplot(1, 2, 1)
-plt.ylim(0.5, 0.85)
-plt.plot(epochs_range, acc, label='Training Accuracy')
-plt.plot(epochs_range, val_acc, label='Validation Accuracy')
-plt.legend(loc='lower right')
-plt.title('Training and Validation Accuracy')
+# fig = plt.figure(figsize=(8, 8))
+# plt.subplot(1, 2, 1)
+# plt.ylim(0.5, 0.85)
+# plt.plot(epochs_range, acc, label='Training Accuracy')
+# plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+# plt.legend(loc='lower right')
+# plt.title('Training and Validation Accuracy')
 
-plt.subplot(1, 2, 2)
-plt.ylim(0.35, 0.75)
-plt.plot(epochs_range, loss, label='Training Loss')
-plt.plot(epochs_range, val_loss, label='Validation Loss')
-plt.legend(loc='upper right')
-plt.title('Training and Validation Loss')
-plt.show()
-fig.savefig('result_exp3/acc_loss_basic.png')
+# plt.subplot(1, 2, 2)
+# plt.ylim(0.35, 0.75)
+# plt.plot(epochs_range, loss, label='Training Loss')
+# plt.plot(epochs_range, val_loss, label='Validation Loss')
+# plt.legend(loc='upper right')
+# plt.title('Training and Validation Loss')
+# plt.show()
+# fig.savefig('result_exp3/acc_loss_basic.png')
 
 
-np.set_printoptions(precision=4) 
-np.savetxt("result_exp3/exp3_acc_history.txt", np.array(acc), delimiter=",")
-np.savetxt("result_exp3/exp3_val_acc_history.txt", np.array(val_acc), delimiter=",")
-np.savetxt("result_exp3/exp3_loss_history.txt", np.array(loss), delimiter=",")
-np.savetxt("result_exp3/exp3_val_loss_history.txt", np.array(val_loss), delimiter=",")
+# np.set_printoptions(precision=4) 
+# np.savetxt("result_exp3/exp3_acc_history.txt", np.array(acc), delimiter=",")
+# np.savetxt("result_exp3/exp3_val_acc_history.txt", np.array(val_acc), delimiter=",")
+# np.savetxt("result_exp3/exp3_loss_history.txt", np.array(loss), delimiter=",")
+# np.savetxt("result_exp3/exp3_val_loss_history.txt", np.array(val_loss), delimiter=",")
